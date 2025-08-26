@@ -1,8 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o"
   "CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o.d"
-  "CMakeFiles/lob_simulator.dir/src/lob.cpp.o"
-  "CMakeFiles/lob_simulator.dir/src/lob.cpp.o.d"
   "CMakeFiles/lob_simulator.dir/src/main.cpp.o"
   "CMakeFiles/lob_simulator.dir/src/main.cpp.o.d"
   "lob_simulator"

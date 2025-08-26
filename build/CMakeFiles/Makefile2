@@ -85,12 +85,12 @@ clean: CMakeFiles/lob_simulator.dir/clean
 CMakeFiles/lob_simulator.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob_simulator.dir/build.make CMakeFiles/lob_simulator.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob_simulator.dir/build.make CMakeFiles/lob_simulator.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/Users/haiou/Documents/Coding Projects/LOB_basic/build/CMakeFiles" --progress-num=1,2,3,4 "Built target lob_simulator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/Users/haiou/Documents/Coding Projects/LOB_basic/build/CMakeFiles" --progress-num=1,2,3 "Built target lob_simulator"
 .PHONY : CMakeFiles/lob_simulator.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/lob_simulator.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/haiou/Documents/Coding Projects/LOB_basic/build/CMakeFiles" 4
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/haiou/Documents/Coding Projects/LOB_basic/build/CMakeFiles" 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/lob_simulator.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/haiou/Documents/Coding Projects/LOB_basic/build/CMakeFiles" 0
 .PHONY : CMakeFiles/lob_simulator.dir/rule

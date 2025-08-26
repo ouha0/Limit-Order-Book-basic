@@ -72,38 +72,10 @@ include CMakeFiles/lob_simulator.dir/flags.make
 CMakeFiles/lob_simulator.dir/codegen:
 .PHONY : CMakeFiles/lob_simulator.dir/codegen
 
-CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o: CMakeFiles/lob_simulator.dir/flags.make
-CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o: /Users/haiou/Documents/Coding\ Projects/LOB_basic/src/LimitOrderBook.cpp
-CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o: CMakeFiles/lob_simulator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/haiou/Documents/Coding Projects/LOB_basic/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o -MF CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o.d -o CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o -c "/Users/haiou/Documents/Coding Projects/LOB_basic/src/LimitOrderBook.cpp"
-
-CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/haiou/Documents/Coding Projects/LOB_basic/src/LimitOrderBook.cpp" > CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.i
-
-CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/haiou/Documents/Coding Projects/LOB_basic/src/LimitOrderBook.cpp" -o CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.s
-
-CMakeFiles/lob_simulator.dir/src/lob.cpp.o: CMakeFiles/lob_simulator.dir/flags.make
-CMakeFiles/lob_simulator.dir/src/lob.cpp.o: /Users/haiou/Documents/Coding\ Projects/LOB_basic/src/lob.cpp
-CMakeFiles/lob_simulator.dir/src/lob.cpp.o: CMakeFiles/lob_simulator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/haiou/Documents/Coding Projects/LOB_basic/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/lob_simulator.dir/src/lob.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lob_simulator.dir/src/lob.cpp.o -MF CMakeFiles/lob_simulator.dir/src/lob.cpp.o.d -o CMakeFiles/lob_simulator.dir/src/lob.cpp.o -c "/Users/haiou/Documents/Coding Projects/LOB_basic/src/lob.cpp"
-
-CMakeFiles/lob_simulator.dir/src/lob.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/lob_simulator.dir/src/lob.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/haiou/Documents/Coding Projects/LOB_basic/src/lob.cpp" > CMakeFiles/lob_simulator.dir/src/lob.cpp.i
-
-CMakeFiles/lob_simulator.dir/src/lob.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/lob_simulator.dir/src/lob.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/haiou/Documents/Coding Projects/LOB_basic/src/lob.cpp" -o CMakeFiles/lob_simulator.dir/src/lob.cpp.s
-
 CMakeFiles/lob_simulator.dir/src/main.cpp.o: CMakeFiles/lob_simulator.dir/flags.make
 CMakeFiles/lob_simulator.dir/src/main.cpp.o: /Users/haiou/Documents/Coding\ Projects/LOB_basic/src/main.cpp
 CMakeFiles/lob_simulator.dir/src/main.cpp.o: CMakeFiles/lob_simulator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/haiou/Documents/Coding Projects/LOB_basic/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/lob_simulator.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/haiou/Documents/Coding Projects/LOB_basic/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lob_simulator.dir/src/main.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lob_simulator.dir/src/main.cpp.o -MF CMakeFiles/lob_simulator.dir/src/main.cpp.o.d -o CMakeFiles/lob_simulator.dir/src/main.cpp.o -c "/Users/haiou/Documents/Coding Projects/LOB_basic/src/main.cpp"
 
 CMakeFiles/lob_simulator.dir/src/main.cpp.i: cmake_force
@@ -114,21 +86,33 @@ CMakeFiles/lob_simulator.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/lob_simulator.dir/src/main.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/haiou/Documents/Coding Projects/LOB_basic/src/main.cpp" -o CMakeFiles/lob_simulator.dir/src/main.cpp.s
 
+CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o: CMakeFiles/lob_simulator.dir/flags.make
+CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o: /Users/haiou/Documents/Coding\ Projects/LOB_basic/src/LimitOrderBook.cpp
+CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o: CMakeFiles/lob_simulator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/haiou/Documents/Coding Projects/LOB_basic/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o -MF CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o.d -o CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o -c "/Users/haiou/Documents/Coding Projects/LOB_basic/src/LimitOrderBook.cpp"
+
+CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/haiou/Documents/Coding Projects/LOB_basic/src/LimitOrderBook.cpp" > CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.i
+
+CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/haiou/Documents/Coding Projects/LOB_basic/src/LimitOrderBook.cpp" -o CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.s
+
 # Object files for target lob_simulator
 lob_simulator_OBJECTS = \
-"CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o" \
-"CMakeFiles/lob_simulator.dir/src/lob.cpp.o" \
-"CMakeFiles/lob_simulator.dir/src/main.cpp.o"
+"CMakeFiles/lob_simulator.dir/src/main.cpp.o" \
+"CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o"
 
 # External object files for target lob_simulator
 lob_simulator_EXTERNAL_OBJECTS =
 
-lob_simulator: CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o
-lob_simulator: CMakeFiles/lob_simulator.dir/src/lob.cpp.o
 lob_simulator: CMakeFiles/lob_simulator.dir/src/main.cpp.o
+lob_simulator: CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o
 lob_simulator: CMakeFiles/lob_simulator.dir/build.make
 lob_simulator: CMakeFiles/lob_simulator.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/haiou/Documents/Coding Projects/LOB_basic/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable lob_simulator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/haiou/Documents/Coding Projects/LOB_basic/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable lob_simulator"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/lob_simulator.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

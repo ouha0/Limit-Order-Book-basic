@@ -9,7 +9,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/haiou/Documents/Coding Projects/LOB_basic/src/LimitOrderBook.cpp" "CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o" "gcc" "CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o.d"
-  "/Users/haiou/Documents/Coding Projects/LOB_basic/src/lob.cpp" "CMakeFiles/lob_simulator.dir/src/lob.cpp.o" "gcc" "CMakeFiles/lob_simulator.dir/src/lob.cpp.o.d"
   "/Users/haiou/Documents/Coding Projects/LOB_basic/src/main.cpp" "CMakeFiles/lob_simulator.dir/src/main.cpp.o" "gcc" "CMakeFiles/lob_simulator.dir/src/main.cpp.o.d"
   )
 

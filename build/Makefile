@@ -153,30 +153,6 @@ src/LimitOrderBook.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob_simulator.dir/build.make CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.s
 .PHONY : src/LimitOrderBook.cpp.s
 
-src/lob.o: src/lob.cpp.o
-.PHONY : src/lob.o
-
-# target to build an object file
-src/lob.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob_simulator.dir/build.make CMakeFiles/lob_simulator.dir/src/lob.cpp.o
-.PHONY : src/lob.cpp.o
-
-src/lob.i: src/lob.cpp.i
-.PHONY : src/lob.i
-
-# target to preprocess a source file
-src/lob.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob_simulator.dir/build.make CMakeFiles/lob_simulator.dir/src/lob.cpp.i
-.PHONY : src/lob.cpp.i
-
-src/lob.s: src/lob.cpp.s
-.PHONY : src/lob.s
-
-# target to generate assembly for a file
-src/lob.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob_simulator.dir/build.make CMakeFiles/lob_simulator.dir/src/lob.cpp.s
-.PHONY : src/lob.cpp.s
-
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -213,9 +189,6 @@ help:
 	@echo "... src/LimitOrderBook.o"
 	@echo "... src/LimitOrderBook.i"
 	@echo "... src/LimitOrderBook.s"
-	@echo "... src/lob.o"
-	@echo "... src/lob.i"
-	@echo "... src/lob.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

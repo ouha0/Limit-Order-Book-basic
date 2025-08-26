@@ -13,27 +13,36 @@
 
 class LimitOrderBook {
     public:
-        void add_order(OrderId id, Side side, Price price, Quantity quantity);
+        void add_order(const Order& order);
         void cancel_order(OrderId id);
-        void print_book();
+
+        void print_book() const; // good for debugging 
         const std::vector<Trade>& get_trade_log() const; // Constant reference to get trade log, without changing anything (display)
 
 
     private:
         
+        using OrderList = std::list<Order>;
+
         std::map<Price, OrderList, std::greater<Price>> bids_; // Key value ordered pairs holding lists of orders (bid )
         std::map<Price, OrderList> asks_; // Ask 
-        std::vector<Trade> trade_log_;
+        std::vector<Trade> trades_;
 
         struct OrderInfo{
-            OrderPtr order_ptr;
-            OrderList::iterator list_iterator; // Address of order to be deleted inside the relevant OrderList 
+            OrderList::iterator iter; // Address of order to be deleted inside the relevant OrderList 
             Side side;
 
         }; 
 
+        std::unordered_map<OrderId, OrderInfo> order_map_;
+
         /* New order comes in, run this to see if any trades can be matched */
-        void match_trade();
+        void match_orders();
+
+        void create_trade(Order& maker_order, Order& taker_order, Quantity fill_quantity);
+        
+    /* Remove fully filled order from the book and map */
+        void remove_filled_order(OrderList& order_list, OrderList::iterator& it, Price price, Side side);
 
 };
 

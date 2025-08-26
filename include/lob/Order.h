@@ -1,15 +1,14 @@
 #pragma once // Prevents compilation error 
 
 
-
 #include <memory>
-#include <list>
+#include <cstdint>
 
 
 /* Type definitions */
-using Price = int;
-using Quantity = unsigned int;
-using OrderId = unsigned long long; // For very long id's 
+using Price = int32_t;
+using Quantity = uint32_t;
+using OrderId = uint64_t; // For very long id's 
 
 
 
@@ -19,12 +18,12 @@ enum class Side {Buy, Sell}; // For clarity
 struct Order {
     OrderId id;
     Price price;
-    Side side; // Type of order
     Quantity quantity;
+    Side side; // Type of order
 
+    // Constructor
+    Order(OrderId order_id, Price p, Quantity q, Side s) :
+        id(order_id), price(p), quantity(q), side(s) {}
 };
 
 
-/* Type definitions; clarity */
-using OrderPtr = std::shared_ptr<Order>;
-using OrderList = std::list<OrderPtr>;

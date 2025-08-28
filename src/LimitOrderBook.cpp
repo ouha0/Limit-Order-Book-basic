@@ -96,16 +96,14 @@ void LimitOrderBook::match_orders() {
         first_best_bid.quantity -= fill_quantitiy;
         first_best_ask.quantity -= fill_quantitiy;
 
-        /* Remove filled up order; either bid or ask */
+        /* Remove filled up order; Note both bid and ask orders can be removed at the same time */
         if (first_best_bid.quantity == 0) {
-            assert(first_best_bid.quantity >= 0 && "Quantity of bid order must be >= 0");
-
             auto it_to_remove = best_bid_list.begin();
             remove_filled_order(best_bid_list, it_to_remove, bids_.begin() -> first, Side::Buy);
 
-        } else { // asks order all used up
-            assert(first_best_ask.quantity >= 0 && "Quantity of ask order must be >= 0");
-            
+        }
+
+        if (first_best_ask.quantity == 0) {
             auto it_to_remove = best_ask_list.begin();
             remove_filled_order(best_ask_list, it_to_remove, asks_.begin() -> first, Side::Sell);
         }
@@ -117,6 +115,7 @@ void LimitOrderBook::create_trade(Order& maker_order, Order& taker_order, Quanti
     trades_.emplace_back(maker_order.id, taker_order.id, maker_order.price, fill_quantitiy);
 
     /* Display on standard output */
+    // Price-time priority of trade is that the trade price is determined by the price of the maker / resting order 
     std::cout << "TRADE: " << fill_quantitiy << " @ " << maker_order.price 
         << " Maker: " << maker_order.id << " , Taker: " << taker_order.id << " )\n";
 }

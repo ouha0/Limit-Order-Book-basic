@@ -1,0 +1,21 @@
+# Scenario 1: non-matched orders
+# ADD <SIDE> <PRICE> <QUANTITY>
+ADD BUY 100 10
+ADD BUY 100 5
+ADD BUY 99 20
+ADD SELL 101 10
+ADD SELL 102 15
+ADD SELL 101 5
+
+# Scenario 2: Aggressive buy order
+ADD BUY 101 20
+
+# Scenario 3: Aggressive sell order
+ADD SELL 100 15
+
+# Scenario 4: Cancelling an order
+# CANCEL <ORDER_ID>
+CANCEL 3
+
+# Scenario 5: A sell that would have matched the cancelled order
+ADD SELL 99 5

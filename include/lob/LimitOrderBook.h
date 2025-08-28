@@ -17,7 +17,7 @@ class LimitOrderBook {
         void cancel_order(OrderId id);
 
         void print_book() const; // good for debugging 
-        const std::vector<Trade>& get_trades() const {return trades_ }; // Constant reference to get trade log, without changing anything (display)
+        const std::vector<Trade>& get_trades() const {return trades_; }; // Constant reference to get trade log, without changing anything (display)
 
 
     private:

@@ -17,14 +17,15 @@ class LimitOrderBook {
         void cancel_order(OrderId id);
 
         void print_book() const; // good for debugging 
-        const std::vector<Trade>& get_trade_log() const; // Constant reference to get trade log, without changing anything (display)
+        const std::vector<Trade>& get_trades() const {return trades_ }; // Constant reference to get trade log, without changing anything (display)
 
 
     private:
         
         using OrderList = std::list<Order>;
 
-        std::map<Price, OrderList, std::greater<Price>> bids_; // Key value ordered pairs holding lists of orders (bid )
+        /* Self balancing tree ordered by price, then time */
+        std::map<Price, OrderList, std::greater<Price>> bids_; // Key value ordered pairs holding lists of orders (bid)
         std::map<Price, OrderList> asks_; // Ask 
         std::vector<Trade> trades_;
 

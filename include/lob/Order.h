@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <cstdint>
+#include <cassert>
 
 
 /* Type definitions */

@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named lob_simulator
+# Target rules for targets named lob
 
 # Build rule for target.
-lob_simulator: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lob_simulator
-.PHONY : lob_simulator
+lob: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lob
+.PHONY : lob
 
 # fast build rule for target.
-lob_simulator/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob_simulator.dir/build.make CMakeFiles/lob_simulator.dir/build
-.PHONY : lob_simulator/fast
+lob/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob.dir/build.make CMakeFiles/lob.dir/build
+.PHONY : lob/fast
 
 src/LimitOrderBook.o: src/LimitOrderBook.cpp.o
 .PHONY : src/LimitOrderBook.o
 
 # target to build an object file
 src/LimitOrderBook.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob_simulator.dir/build.make CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob.dir/build.make CMakeFiles/lob.dir/src/LimitOrderBook.cpp.o
 .PHONY : src/LimitOrderBook.cpp.o
 
 src/LimitOrderBook.i: src/LimitOrderBook.cpp.i
@@ -142,7 +142,7 @@ src/LimitOrderBook.i: src/LimitOrderBook.cpp.i
 
 # target to preprocess a source file
 src/LimitOrderBook.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob_simulator.dir/build.make CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob.dir/build.make CMakeFiles/lob.dir/src/LimitOrderBook.cpp.i
 .PHONY : src/LimitOrderBook.cpp.i
 
 src/LimitOrderBook.s: src/LimitOrderBook.cpp.s
@@ -150,15 +150,39 @@ src/LimitOrderBook.s: src/LimitOrderBook.cpp.s
 
 # target to generate assembly for a file
 src/LimitOrderBook.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob_simulator.dir/build.make CMakeFiles/lob_simulator.dir/src/LimitOrderBook.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob.dir/build.make CMakeFiles/lob.dir/src/LimitOrderBook.cpp.s
 .PHONY : src/LimitOrderBook.cpp.s
+
+src/Parser.o: src/Parser.cpp.o
+.PHONY : src/Parser.o
+
+# target to build an object file
+src/Parser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob.dir/build.make CMakeFiles/lob.dir/src/Parser.cpp.o
+.PHONY : src/Parser.cpp.o
+
+src/Parser.i: src/Parser.cpp.i
+.PHONY : src/Parser.i
+
+# target to preprocess a source file
+src/Parser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob.dir/build.make CMakeFiles/lob.dir/src/Parser.cpp.i
+.PHONY : src/Parser.cpp.i
+
+src/Parser.s: src/Parser.cpp.s
+.PHONY : src/Parser.s
+
+# target to generate assembly for a file
+src/Parser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob.dir/build.make CMakeFiles/lob.dir/src/Parser.cpp.s
+.PHONY : src/Parser.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob_simulator.dir/build.make CMakeFiles/lob_simulator.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob.dir/build.make CMakeFiles/lob.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -166,7 +190,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob_simulator.dir/build.make CMakeFiles/lob_simulator.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob.dir/build.make CMakeFiles/lob.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -174,7 +198,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob_simulator.dir/build.make CMakeFiles/lob_simulator.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lob.dir/build.make CMakeFiles/lob.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 # Help Target
@@ -185,10 +209,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... lob_simulator"
+	@echo "... lob"
 	@echo "... src/LimitOrderBook.o"
 	@echo "... src/LimitOrderBook.i"
 	@echo "... src/LimitOrderBook.s"
+	@echo "... src/Parser.o"
+	@echo "... src/Parser.i"
+	@echo "... src/Parser.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

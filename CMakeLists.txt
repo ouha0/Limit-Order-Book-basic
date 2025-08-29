@@ -17,7 +17,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # --- Project Configuration ---
 # Define the name of the executable
-set(EXECUTABLE_NAME lob_simulator)
+set(EXECUTABLE_NAME lob)
 
 # Tell the compiler where to find our header files (e.g., #include "lob/Order.h")
 include_directories(include)
@@ -28,4 +28,5 @@ include_directories(include)
 add_executable(${EXECUTABLE_NAME}
     src/main.cpp
     src/LimitOrderBook.cpp
+    src/Parser.cpp
 )

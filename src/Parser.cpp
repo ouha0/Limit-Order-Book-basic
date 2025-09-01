@@ -8,8 +8,17 @@
 
 namespace Parser {
 
-    /* Function that parses commands from a input file, and 
-     * stores commands into a vector of commands (I/O is very slow)*/
+
+/* Expected input structure from .txt : 
+ * "ADD side price quantity"
+ * "CANCEL id"
+ * */
+
+
+
+
+/* Function that parses commands from a input file, and 
+ * stores commands into a vector of commands (I/O is very slow)*/
 std::vector<Command> parse_commands(const std::string& filename) {
     std::ifstream input_file(filename);
     if (!input_file.is_open()) {

@@ -2,13 +2,14 @@
 #include "lob/Order.h"
 #include <iostream>
 
+/* Remember to comment out assert when testing speed */
 
 
 /* Function that adds an order to the LOB*/
 void LimitOrderBook::add_order(const Order& order) {
     /* Order of nothing doesn't make sense */
     if (order.quantity == 0) {
-        assert(order.quantity > 0 && "Error: order should never have zero quantity");
+        std::cerr << "Order should never have 0 quantity" << std::endl;
         return;
     }
 
@@ -34,8 +35,9 @@ void LimitOrderBook::cancel_order(OrderId id) {
     /* O(1) */
     /* Find the id in hashtable */
     auto it = order_map_.find(id); 
+    /* Order is is not found */
     if (it == order_map_.end()) {
-        assert(true && "Order not found, this shouldn't happen");
+        std::cerr << "Order id " << id << " not found" << std::endl;
         return;
     }
 

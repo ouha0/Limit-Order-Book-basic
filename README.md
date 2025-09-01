@@ -2,16 +2,16 @@
 This project is a simple implementation of a limit order book (LOB) in C++. It is designed as an educational tool to demonstrate the core functionality of matching buy and sell orders based on 
 price-time priority. 
 
-This is not a low-latency system. The primary focus is on correctness and clarity of the fundamental LOB mechanics, not on advanced features ligh high-frequency performance, network protocols 
+This is not a low-latency system. The primary focus is on correctness and clarity of the fundamental LOB mechanics, not on advanced features like high-frequency performance, network protocols 
 or complex order types. 
 
 
 # Features 
 - **Add Orders:** Accepts new buy and sell limit orders
 - **Cancel Orders:** Order cancellation mechanism
-- **Price-time Priority Matching:** Matches orders based on standard exchange rules (
+- **Price-time Priority Matching:** Matches orders based on standard exchange rules(
 Price first, then first-in-first-out)
-- **Trade Log:** logs all trades with price, quantity, and parties (customer id)
+- **Trade Log:** logs all trades with price, quantity, and parties (customer ID)
 
 
 *   **The Books (`std::map`):** 

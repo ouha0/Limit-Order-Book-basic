@@ -1,0 +1,5 @@
+add_test([=[LOBTest.BuySellOrder]=]  [==[/Users/haiou/Documents/Coding Projects/LOB_basic/build/lob_tests]==] [==[--gtest_filter=LOBTest.BuySellOrder]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[LOBTest.BuySellOrder]=]  PROPERTIES WORKING_DIRECTORY [==[/Users/haiou/Documents/Coding Projects/LOB_basic/build]==] SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+add_test([=[LOBTest.FifoPriority]=]  [==[/Users/haiou/Documents/Coding Projects/LOB_basic/build/lob_tests]==] [==[--gtest_filter=LOBTest.FifoPriority]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[LOBTest.FifoPriority]=]  PROPERTIES WORKING_DIRECTORY [==[/Users/haiou/Documents/Coding Projects/LOB_basic/build]==] SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+set(  lob_tests_TESTS LOBTest.BuySellOrder LOBTest.FifoPriority)

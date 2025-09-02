@@ -1,0 +1,57 @@
+Start testing: Sep 02 17:20 AEST
+----------------------------------------------------------
+1/2 Testing: LOBTest.BuySellOrder
+1/2 Test: LOBTest.BuySellOrder
+Command: "/Users/haiou/Documents/Coding Projects/LOB_basic/build/lob_tests" "--gtest_filter=LOBTest.BuySellOrder" "--gtest_also_run_disabled_tests"
+Directory: /Users/haiou/Documents/Coding Projects/LOB_basic/build
+"LOBTest.BuySellOrder" start time: Sep 02 17:20 AEST
+Output:
+----------------------------------------------------------
+Running main() from /Users/haiou/Documents/Coding Projects/LOB_basic/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = LOBTest.BuySellOrder
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from LOBTest
+[ RUN      ] LOBTest.BuySellOrder
+[       OK ] LOBTest.BuySellOrder (0 ms)
+[----------] 1 test from LOBTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"LOBTest.BuySellOrder" end time: Sep 02 17:20 AEST
+"LOBTest.BuySellOrder" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/2 Testing: LOBTest.FifoPriority
+2/2 Test: LOBTest.FifoPriority
+Command: "/Users/haiou/Documents/Coding Projects/LOB_basic/build/lob_tests" "--gtest_filter=LOBTest.FifoPriority" "--gtest_also_run_disabled_tests"
+Directory: /Users/haiou/Documents/Coding Projects/LOB_basic/build
+"LOBTest.FifoPriority" start time: Sep 02 17:20 AEST
+Output:
+----------------------------------------------------------
+Running main() from /Users/haiou/Documents/Coding Projects/LOB_basic/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = LOBTest.FifoPriority
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from LOBTest
+[ RUN      ] LOBTest.FifoPriority
+[       OK ] LOBTest.FifoPriority (0 ms)
+[----------] 1 test from LOBTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"LOBTest.FifoPriority" end time: Sep 02 17:20 AEST
+"LOBTest.FifoPriority" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Sep 02 17:20 AEST

@@ -1,0 +1,5 @@
+if(EXISTS "/Users/haiou/Documents/Coding Projects/LOB_basic/build/lob_tests[1]_tests.cmake")
+  include("/Users/haiou/Documents/Coding Projects/LOB_basic/build/lob_tests[1]_tests.cmake")
+else()
+  add_test(lob_tests_NOT_BUILT lob_tests_NOT_BUILT)
+endif()

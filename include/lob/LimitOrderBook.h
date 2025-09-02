@@ -10,15 +10,20 @@
 #include <functional>
 #include <vector>
 
+using OrderList = std::list<Order>;
 
 class LimitOrderBook {
     public:
         void add_order(const Order& order);
         void cancel_order(OrderId id);
 
-        void print_book() const; // good for debugging 
+        /* Debugging */
+        void print_book() const; 
+        const std::map<Price, OrderList>& get_asks() const {return asks_;}; 
+        const std::map<Price, OrderList, std::greater<Price>>& get_bids() const {return bids_;};
+
+
         const std::vector<Trade>& get_trades() const {return trades_; }; // Constant reference to get trade log, without changing anything (display)
-        
         uint64_t get_missed_cancel_count() const {return missed_cancels_;}
 
 
@@ -26,7 +31,6 @@ class LimitOrderBook {
         /* Due to the nature of cancel order data generation , we may receive invalid cancel orders */
         uint64_t missed_cancels_ = 0; 
         
-        using OrderList = std::list<Order>;
 
         /* Self balancing tree ordered by price, then time */
         std::map<Price, OrderList, std::greater<Price>> bids_; // Key value ordered pairs holding lists of orders (bid)

@@ -142,5 +142,5 @@ void LimitOrderBook::remove_filled_order(OrderList& order_list, OrderList::itera
             asks_.erase(price);
         }
     }
-
 }
+

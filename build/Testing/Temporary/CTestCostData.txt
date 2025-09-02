@@ -1,3 +1,6 @@
 LOBTest.BuySellOrder 1 0.00807275
-LOBTest.FifoPriority 1 0.00758617
+LOBTest.FifoPriority 9 0.000762139
+LOBTest.AddAndMatch 8 0.00099074
+LOBTest.CancelOrder 0 0
+LOBTest.CancelBestBid 1 0.00660842
 ---

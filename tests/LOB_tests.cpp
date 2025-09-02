@@ -8,9 +8,8 @@ protected:
 };
 
 /* Test suite */
-/* Add a buy and sell order at the same price and check that a 
- * trade will occur. Also make sure that the ask and bid tree is empty */
-TEST_F(LOBTest, BuySellOrder) {
+/* Basic Operations */
+TEST_F(LOBTest, AddAndMatch) {
     lob.add_order({1, 100, 10, Side::Buy});
     lob.add_order({2, 100, 10, Side::Sell});
 
@@ -29,6 +28,26 @@ TEST_F(LOBTest, BuySellOrder) {
 
 }
 
+/* Order is successfully cancelled */
+TEST_F(LOBTest, CancelBestBid) {
+    lob.add_order({1, 100, 10, Side::Buy}); // Worse price
+    lob.add_order({2, 105, 10, Side::Buy}); // Best price
+
+    // CHECK 1: The best bid should be order #2 at price 105.
+    // We use .at() to look up a specific price level.
+    ASSERT_EQ(lob.get_bids().begin()->first, 105);
+    ASSERT_EQ(lob.get_bids().begin()->second.front().id, 2);
+
+    // ACTION: Cancel the BEST bid (order #2)
+    lob.cancel_order(2);
+
+    // CHECK 2: The NEW best bid should now be order #1 at price 100.
+    ASSERT_EQ(lob.get_bids().size(), 1); // Only one price level should remain
+    ASSERT_EQ(lob.get_bids().begin()->first, 100);
+    ASSERT_EQ(lob.get_bids().begin()->second.front().id, 1);
+}
+
+
 /* Tests the limit order book time priority rule, given the same price */
 TEST_F(LOBTest, FifoPriority) {
     lob.add_order({1, 100, 10, Side::Buy});
@@ -41,5 +60,14 @@ TEST_F(LOBTest, FifoPriority) {
     ASSERT_EQ(trade.price, 100);
     ASSERT_EQ(trade.resting_order_id, 1); // Check that that resting order of first trade is id 1
 }
+
+
+/* Future tests: Partial fill, Multiple trade matches at same price and different match 
+ *check zero quantity order, cancel non-existent order, cancel partially filled order
+ * */
+
+
+
+
 
 

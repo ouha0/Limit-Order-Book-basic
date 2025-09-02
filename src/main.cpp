@@ -51,7 +51,7 @@ int main (int argc, char* argv[]) {
 
     std::cout << "Processing orders..." << std::endl;
     
-    // auto start = std::chrono::high_resolution_clock::now();
+    auto start = std::chrono::high_resolution_clock::now();
 
     /* Adding commands to LOB */
     for (const auto& cmd : commands) {
@@ -64,12 +64,15 @@ int main (int argc, char* argv[]) {
         }
     }
 
-    // auto end = std::chrono::high_resolution_clock::now();
+    auto end = std::chrono::high_resolution_clock::now();
 
     /* Part 3: Check behaviour and time */
-    // auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    // std::cout << "\n Processing took " << duration << " milliseconds" << std::endl;
-    // std::cout << "Total Trades: " << lob.get_trades().size() << std::endl;
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
+    std::cout << "Cancel orders not found: " << lob.get_missed_cancel_count() << std::endl;
+    std::cout << "\nProcessing took " << duration.count() << " milliseconds" << std::endl;
+    std::cout << "Total Trades: " << lob.get_trades().size() << std::endl;
+    
 
     return 0;
 }

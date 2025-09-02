@@ -18,9 +18,13 @@ class LimitOrderBook {
 
         void print_book() const; // good for debugging 
         const std::vector<Trade>& get_trades() const {return trades_; }; // Constant reference to get trade log, without changing anything (display)
+        
+        uint64_t get_missed_cancel_count() const {return missed_cancels_;}
 
 
     private:
+        /* Due to the nature of cancel order data generation , we may receive invalid cancel orders */
+        uint64_t missed_cancels_ = 0; 
         
         using OrderList = std::list<Order>;
 

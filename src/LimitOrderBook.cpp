@@ -37,7 +37,7 @@ void LimitOrderBook::cancel_order(OrderId id) {
     auto it = order_map_.find(id); 
     /* Order is is not found */
     if (it == order_map_.end()) {
-        std::cerr << "Order id " << id << " not found" << std::endl;
+        missed_cancels_++; // count number of cancel order id's that can't be found
         return;
     }
 
@@ -118,8 +118,11 @@ void LimitOrderBook::create_trade(Order& maker_order, Order& taker_order, Quanti
 
     /* Display on standard output */
     // Price-time priority of trade is that the trade price is determined by the price of the maker / resting order 
-    std::cout << "TRADE: " << fill_quantitiy << " @ " << maker_order.price 
-        << " Maker: " << maker_order.id << " , Taker: " << taker_order.id << " )\n";
+
+
+    /* Comment out: printing to stdout is slow */
+   // std::cout << "TRADE: " << fill_quantitiy << " @ " << maker_order.price 
+   //     << " Maker: " << maker_order.id << " , Taker: " << taker_order.id << " )\n";
 }
 
 /* Removes orders that have already been filled */

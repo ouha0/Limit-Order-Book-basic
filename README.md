@@ -47,33 +47,33 @@ and **Contiguous arrays.**
 
 ## Build Steps
 
-# 1. Clone repo
-git clone https://github.com/ouha0/LOB_basic.git
-cd LOB_basic
-
-# 2. Navigate into Build directory and tell Cmake to look at CmakeLists.txt at parent directory 
-mkdir build
-cd build
-cmake ..
-
-# 3. Compile using make. This will create an executable 'lob'
-make
-
-# 4. Run the executable, and give it an input file, which is inside the input directory
-./lob ../input/{txt command file name}
-i.e. 
-./lob ../input/1_mill.txt
-./lob ../order_test.txt
+1.  **Clone the repository**
+    ```sh
+    git clone https://github.com/ouha0/LOB_basic.git(https://github.com/ouha0/LOB_basic)
+    cd LOB_basic.git
+    ```
+2.  **Configure and build with CMake:**
+    ```sh
+    mkdir build
+    cd build
+    cmake ..
+    make
+    ```
+3. **Running the application:**
+    ```sh
+    ./lob ../order_test.txt
+    ```
 
 
 ## Generate Data 
-# 1. Go to data_generate directory from root directory 
-cd data_generate
-
-# 2. Open the jupyter lab and run all cells
-Change the filename in the last cell 
+1. **Go to data_generate directory from root directory**
+    ```sh
+    cd data_generate
+    ```
+2. **Open the jupyter lab and run all cells**
+Change the filename in the last cell, and run the cells 
 
 
 ## Other
-# Testing was done using Google Test
+Google test was used for testing
 

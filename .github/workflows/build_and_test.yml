@@ -10,14 +10,14 @@ on:
 
 # Job workflow 
 jobs:
-  build-and-test:
+    build-and-test:
     runs-on: ubuntu-latest # Virtual machine 
 
     steps:
       # Download code to VM 
       - name: Check out repo
       uses: actions/checkout@v4
-    
+      
       # Run Cmake 
       - name: Configure with Cmake
       run: cmake -S . -B build

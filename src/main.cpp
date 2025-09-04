@@ -1,8 +1,10 @@
 #include "lob/LimitOrderBook.h"
 #include "lob/Parser.h"
 #include "lob/Command.h"
+#include <_types/_uint64_t.h>
 #include <iostream>
 #include <vector>
+#include <iomanip>
 #include <chrono> // use to measure efficiency
 
 
@@ -65,14 +67,29 @@ int main (int argc, char* argv[]) {
     }
 
     auto end = std::chrono::high_resolution_clock::now();
+    auto duration_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start); // long long 
+    double duration_sec = duration_ms.count() / 1000.0;
 
-    /* Part 3: Check behaviour and time */
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-    std::cout << "Cancel orders not found: " << lob.get_missed_cancel_count() << std::endl;
-    std::cout << "\nProcessing took " << duration.count() << " milliseconds" << std::endl;
-    std::cout << "Total Trades: " << lob.get_trades().size() << std::endl;
-    
+    uint64_t total_trades = lob.get_trades().size();
+    double trades_per_second;
+    trades_per_second = total_trades/ duration_sec;
+
+
+    /* Part 3: Check Performance */
+    std::cout << "\n--- Performance Report ---" << std::endl;
+    std::cout << "Total Commands processed: " << commands.size() << std::endl;
+    std::cout << "Total Trades Generated: " << lob.get_trades().size() << std::endl;
+    std::cout << "Missed Cancels: " << lob.get_missed_cancel_count() << std::endl;
+    std::cout << "Total Execution Time: " << duration_sec << " seconds (" << 
+        duration_ms.count() << " ms)" << std::endl;
+
+
+    /* Throughput */
+    // Set output precision
+    std::cout << std::fixed << std::setprecision(2); // 2 decimal points 
+    std::cout << "Throughput: " << trades_per_second << " trades/sec" << std::endl;
+    std::cout << "-----------------------------" << std::endl;
 
     return 0;
 }

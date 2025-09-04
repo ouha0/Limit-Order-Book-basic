@@ -8,6 +8,8 @@ lob
 lob_tests
 
 .DS_Store
+.cache/
+
 
 # Ignore generated data files (very large)
 data_generate/

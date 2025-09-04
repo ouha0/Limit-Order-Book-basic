@@ -11,5 +11,7 @@ lob_tests
 
 # Ignore generated data files (very large)
 data_generate/
+input/
 *.swp
+
 

@@ -52,6 +52,7 @@ git clone https://github.com/ouha0/LOB_basic.git
 cd LOB_basic
 
 # 2. Navigate into Build directory and tell Cmake to look at CmakeLists.txt at parent directory 
+mkdir build
 cd build
 cmake ..
 
@@ -62,6 +63,7 @@ make
 ./lob ../input/{txt command file name}
 i.e. 
 ./lob ../input/1_mill.txt
+./lob ../order_test.txt
 
 
 ## Generate Data 

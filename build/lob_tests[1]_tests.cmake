@@ -1,7 +1,0 @@
-add_test([=[LOBTest.AddAndMatch]=]  [==[/Users/haiou/Documents/Coding Projects/LOB_basic/build/lob_tests]==] [==[--gtest_filter=LOBTest.AddAndMatch]==] --gtest_also_run_disabled_tests)
-set_tests_properties([=[LOBTest.AddAndMatch]=]  PROPERTIES WORKING_DIRECTORY [==[/Users/haiou/Documents/Coding Projects/LOB_basic/build]==] SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-add_test([=[LOBTest.CancelBestBid]=]  [==[/Users/haiou/Documents/Coding Projects/LOB_basic/build/lob_tests]==] [==[--gtest_filter=LOBTest.CancelBestBid]==] --gtest_also_run_disabled_tests)
-set_tests_properties([=[LOBTest.CancelBestBid]=]  PROPERTIES WORKING_DIRECTORY [==[/Users/haiou/Documents/Coding Projects/LOB_basic/build]==] SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-add_test([=[LOBTest.FifoPriority]=]  [==[/Users/haiou/Documents/Coding Projects/LOB_basic/build/lob_tests]==] [==[--gtest_filter=LOBTest.FifoPriority]==] --gtest_also_run_disabled_tests)
-set_tests_properties([=[LOBTest.FifoPriority]=]  PROPERTIES WORKING_DIRECTORY [==[/Users/haiou/Documents/Coding Projects/LOB_basic/build]==] SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-set(  lob_tests_TESTS LOBTest.AddAndMatch LOBTest.CancelBestBid LOBTest.FifoPriority)

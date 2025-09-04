@@ -1,0 +1,12 @@
+# Main ones 
+build/
+CMakeCache.txt
+*.o
+
+# Executables 
+lob
+lob_tests
+
+.DS_Store
+
+

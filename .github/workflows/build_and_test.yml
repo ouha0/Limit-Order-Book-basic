@@ -1,32 +1,24 @@
-name: C++ CI/CD 
+name: C++ CI
 
-
-# Workflow runs on pushes or pull requests to the main branch 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
   pull_request:
-    branches: ["main"]
+    branches: [ "main" ]
 
-# Job workflow 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest # Virtual machine 
+    runs-on: ubuntu-latest
 
     steps:
-      # Download code to VM 
-      -name: Check out repo
-      uses: actions/checkout@v4
-    
-      # Run Cmake 
-      -name: Configure with Cmake
-      run: cmake -S . -B build
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      # Build the project, compile all executables 
-      -name: Build with make
-      run: cmake --build build
+      - name: Configure with CMake
+        run: cmake -S . -B build
 
-      # Run lob_tests
-      -name: Run Tests with CTest
-      run: ctest --test-dir build --verbose
-      
+      - name: Build with Make
+        run: cmake --build build
+
+      - name: Run Tests with CTest
+        run: ctest --test-dir build --verbose

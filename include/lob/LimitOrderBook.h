@@ -46,8 +46,7 @@ private:
   std::vector<Trade> trades_;
 
   struct OrderInfo {
-    OrderList::iterator
-        iter; // Address of order to be deleted inside the relevant OrderList
+    OrderList::iterator iter;
     Side side;
   };
 

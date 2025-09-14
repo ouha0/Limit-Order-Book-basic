@@ -1,9 +1,10 @@
 # minimum required version of CMake
 cmake_minimum_required(VERSION 3.10)
+cmake_policy(SET CMP0135 NEW)
 project(LimitOrderBook)
 
 
-set(CMAKE_CXX_STANRDARD 17)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -16,14 +17,14 @@ set(EXECUTABLE_NAME lob)
 include_directories(include)
 
 
-# --- Main Part --- 
+# --- Main Part ---
 add_executable(${EXECUTABLE_NAME}
     src/main.cpp
     src/LimitOrderBook.cpp
     src/Parser.cpp
 )
 
-# --- Testing --- 
+# --- Testing ---
 enable_testing()
 
 include(FetchContent)
@@ -31,9 +32,9 @@ FetchContent_Declare(
   googletest
   URL https://github.com/google/googletest/archive/refs/tags/v1.17.0.zip
 )
-FetchContent_MakeAvailable(googletest) #Make the google test framework 
+FetchContent_MakeAvailable(googletest) #Make the google test framework
 
-# Create test executable 
+# Create test executable
 add_executable(lob_tests
     tests/LOB_tests.cpp
     src/LimitOrderBook.cpp

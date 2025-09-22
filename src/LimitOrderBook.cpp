@@ -1,30 +1,60 @@
 #include "lob/LimitOrderBook.h"
 #include "lob/Order.h"
+#include <iomanip>
 #include <iostream>
+#include <numeric>
 #include <utility>
 
 /* Remember to comment out assert when testing speed */
 
-/* Function that adds an order to the LOB*/
-void LimitOrderBook::add_order(const Order &order) {
-  /* Order of nothing doesn't make sense */
-  if (order.quantity == 0) {
-    std::cerr << "Order should never have 0 quantity" << std::endl;
+/* Function that adds an order to the LOB */
+void LimitOrderBook::add_order(OrderId id, Price price, Quantity quantity,
+                               Side side) {
+
+  // Invalid quantity, end the function
+  if (quantity == 0) {
     return;
   }
+  // Bug check
+  assert(price > 0 && quantity > 0 &&
+         "Order price and quantity must be greater than zero!");
+  // End bug check
 
-  /* Buy oder */
-  /* O(1) time  */
-  if (order.side == Side::Buy) {
-    auto &price_level_list = bids_[order.price];
-    price_level_list.emplace_back(order); // emplace faster/equal to push_back
-    order_map_[order.id] = {--price_level_list.end(),
-                            Side::Buy}; // Iterator, and side
+  /* Order of nothing doesn't make sense */
+  if (side == Side::Buy) {
+    // Find / Create the price level. Output is a pair: iterator, bool
+    std::pair<BidBookIterator, bool> res =
+        bids_.try_emplace(price, OrderList{});
+    // Add new order to end of price level list
+    BidBookIterator map_iter = res.first;
 
-  } else { // Side:: Sell
-    auto &price_level_list = asks_[order.price];
-    price_level_list.emplace_back(order);
-    order_map_[order.id] = {--price_level_list.end(), Side::Sell};
+    map_iter->second.emplace_back(id, price, quantity, side);
+    auto list_iter =
+        --map_iter->second.end(); // Iterator of most recent order we just added
+
+    // Explicitly define book variant type for compiler
+    std::variant<BidBookIterator, AskBookIterator> book_variant{
+        std::in_place_index<0>, map_iter};
+
+    // Save the iterators into the order hashmap
+    OrderInfo info_to_insert{list_iter, book_variant};
+
+    order_map_.emplace(id, info_to_insert);
+
+  } else {
+    std::pair<AskBookIterator, bool> res =
+        asks_.try_emplace(price, OrderList{});
+
+    AskBookIterator map_iter = res.first;
+    map_iter->second.emplace_back(id, price, quantity, side);
+    auto list_iter = --map_iter->second.end();
+
+    std::variant<BidBookIterator, AskBookIterator> book_variant{
+        std::in_place_index<1>, map_iter};
+
+    OrderInfo info_to_insert{list_iter, book_variant};
+
+    order_map_.emplace(id, info_to_insert);
   }
 
   /* Since new order came in, check for matching orders */
@@ -44,76 +74,142 @@ void LimitOrderBook::cancel_order(OrderId id) {
 
   /* Save Order info */
   const auto &order_info = it->second;
-  Price price = order_info.iter->price;
+  Price price = order_info.order_iter->price;
 
-  /* Delete from bid / ask tree */
-  if (order_info.side == Side::Buy) {
-    auto &price_level_list =
-        bids_.at(price); // Error if price_level_list value not found
-    price_level_list.erase(
-        order_info.iter); // Delete order on doubly linked list
-    /* Delete price level list if empty */
-    if (price_level_list.empty()) {
-      bids_.erase(price);
-    }
+  // Retrieve iterators from ordermap, update lob (delete order and node if
+  // necessary) Lamda function (by reference) to retrieve ordermap and update
+  // lob; using the book_iter object
+  std::visit(
+      [&](auto book_iter) {
+        /* Get iterator of price_level_list; erase relevant node using
+         * order_info iterator*/
+        auto &price_level_list = book_iter->second;
+        price_level_list.erase(order_info.order_iter);
 
-  } else { // Sell side
-    auto &price_level_list =
-        asks_.at(price); // throws error if price list can't be found
-    price_level_list.erase(order_info.iter);
+        /* If price level list is empty, delete the whole node (Deleting it will
+         * require O(logn) rebalancing; should be worthwhile to delete */
+        if (price_level_list.empty()) {
+          // Get type definition of book_iter
+          using BookIteratorType = std::decay_t<decltype(book_iter)>;
 
-    if (price_level_list.empty()) {
-      asks_.erase(price);
-    }
-  }
+          // Used so compiler understands book iterator type. Only compile part
+          // of the "if else"
+          if constexpr (std::is_same_v<BookIteratorType, BidBookIterator>) {
+            bids_.erase(book_iter);
+          } else {
+            asks_.erase(book_iter);
+          }
+        }
+      },
+      order_info.book_iter); // book_iter is the object we want to visit
 
   /* Delete order Ordermap */
   order_map_.erase(it);
 }
 
+// Deal with the case when a bid data structure is emtpy, but ask is still
+// alive; deletion ends early here. Try to always use begin() to avoid dangling
+// iterators
 /* Function that matches orders ont he bid and ask offers */
 void LimitOrderBook::match_orders() {
   /* Bid and ask offers existing, and bid price >= sell price  */
   while (!bids_.empty() && !asks_.empty() &&
          bids_.begin()->first >= asks_.begin()->first) {
-    /* Get best bid and asks price list */
-    auto &best_bid_list = bids_.begin()->second;
-    auto &best_ask_list = asks_.begin()->second;
 
-    /* Get first bid and asks in best bid/ask lists */
-    Order &first_best_bid = best_bid_list.front();
-    Order &first_best_ask = best_ask_list.front();
+    /* Bug checking */
+    std::cout << "Before orders are being matched..." << std::endl;
+    print_book(5);
 
-    /* Match the bid and asks, and save to trade_log */
-    /* uunt64_t is very large, and can hold more than enough ids, so maker and
-     * aggressor order id is compared using order id */
+    /* Retrieve best price node; save order list and first element of order
+     * list
+     */
+    auto best_bid_iter = bids_.begin();
+    auto &best_bid_list = best_bid_iter->second;
 
-    Quantity fill_quantitiy =
-        std::min(first_best_bid.quantity, first_best_ask.quantity);
-    /* By design of the LOB, the smaller id is the maker order, and the larger
-     * id is the aggressor order */
-    if (first_best_bid.id < first_best_ask.id) {
-      create_trade(first_best_bid, first_best_ask, fill_quantitiy);
-    } else { // ask is the maker order, and bid is the taker
-      create_trade(first_best_ask, first_best_bid, fill_quantitiy);
+    auto best_ask_iter = asks_.begin();
+    auto &best_ask_list = best_ask_iter->second;
+
+    assert(!best_bid_list.empty() && !best_ask_list.empty() &&
+           "bid and ask list shouldn't be empty");
+
+    Order &best_bid = best_bid_list.front();
+    Order &best_ask = best_ask_list.front();
+
+    Quantity fill_quantity = std::min(best_bid.quantity, best_ask.quantity);
+
+    std::cout << "Check iterator validity before trade created..." << std::endl;
+    print_book(5);
+
+    /* Check whether bid and ask where resting / aggressor; save into log*/
+    if (best_bid.id < best_ask.id) {
+      std::cout << "Creating trade..." << std::endl;
+      create_trade(best_bid, best_ask, fill_quantity);
+    } else {
+      std::cout << "Creating trade..." << std::endl;
+      create_trade(best_ask, best_bid, fill_quantity);
     }
 
-    first_best_bid.quantity -= fill_quantitiy;
-    first_best_ask.quantity -= fill_quantitiy;
+    std::cout << "Check iterator validity after trade created..." << std::endl;
+    print_book(5);
 
-    /* Remove filled up order; Note both bid and ask orders can be removed at
-     * the same time */
-    if (first_best_bid.quantity == 0) {
-      auto it_to_remove = best_bid_list.begin();
-      remove_filled_order(best_bid_list, it_to_remove, bids_.begin()->first,
-                          Side::Buy);
+    /* Bug testing */
+    std::cout << "Trade should have been created" << std::endl;
+    print_trades();
+    /* End of bug test */
+
+    /* Update order quantity, depending on fill amount */
+    best_bid.quantity -= fill_quantity;
+    best_ask.quantity -= fill_quantity;
+
+    bool bid_filled = (best_bid.quantity == 0);
+    bool ask_filled = (best_ask.quantity == 0);
+
+    if (ask_filled) {
+
+      std::cout << "Ask price level is filled, starting to delete it "
+                << std::endl;
+      remove_filled_ask_order(best_ask_iter, best_ask_list.begin());
+      std::cout << "Ask Price level should be deleted" << std::endl;
+      print_book(2);
     }
 
-    if (first_best_ask.quantity == 0) {
-      auto it_to_remove = best_ask_list.begin();
-      remove_filled_order(best_ask_list, it_to_remove, asks_.begin()->first,
-                          Side::Sell);
+    // using continue doesn't fix the bug... Now theres a seg fault...
+    if (bid_filled) {
+      remove_filled_bid_order(best_bid_iter, best_bid_list.begin());
+
+      std::cout << "Bid Price level should be deleted" << std::endl;
+      print_book(2);
     }
+  }
+
+  /* Because we use continue; need to cater for case when one of bid/ask is
+   * empty and other bid/ask has quantity 0 order */
+  // while (!bids_.empty() && bids_.begin()->second.front().quantity == 0) {
+  //   remove_filled_order(bids_.begin(), bids_.begin()->second.begin());
+  // }
+
+  // while (!asks_.empty() && asks_.begin()->second.front().quantity == 0) {
+  //   remove_filled_order(asks_.begin(), asks_.begin()->second.begin());
+  // }
+}
+
+// Implementation for Bids
+void LimitOrderBook::remove_filled_bid_order(BidBookIterator book_it,
+                                             OrderList::iterator list_it) {
+  order_map_.erase(list_it->id);
+  book_it->second.erase(list_it);
+  if (book_it->second.empty()) {
+    bids_.erase(book_it);
+  }
+}
+
+// Implementation for Asks (Notice the duplicated code!)
+void LimitOrderBook::remove_filled_ask_order(AskBookIterator book_it,
+                                             OrderList::iterator list_it) {
+  order_map_.erase(list_it->id);
+  book_it->second.erase(list_it);
+  if (book_it->second.empty()) {
+    asks_.erase(book_it);
   }
 }
 
@@ -134,28 +230,29 @@ void LimitOrderBook::create_trade(Order &maker_order, Order &taker_order,
 }
 
 /* Removes orders that have already been filled */
-void LimitOrderBook::remove_filled_order(OrderList &order_list,
-                                         OrderList::iterator &it, Price price,
-                                         Side side) {
-  /* Remove from order hashmap */
-  order_map_.erase(it->id);
-  order_list.erase(it); // Remove specific order form order_list
-
-  /* Remove order list if empty */
-  if (order_list.empty()) {
-
-    /* Either bid or ask list */
-    if (side == Side::Buy) {
-      bids_.erase(price);
-    } else { // Sell side
-      asks_.erase(price);
-    }
-  }
-}
+// void LimitOrderBook::remove_filled_order(OrderList &order_list,
+//                                          OrderList::iterator &it, Price
+//                                          price, Side side) {
+//   /* Remove from order hashmap */
+//   order_map_.erase(it->id);
+//   order_list.erase(it); // Remove specific order form order_list
+//
+//   /* Remove order list if empty */
+//   if (order_list.empty()) {
+//
+//     /* Either bid or ask list */
+//     if (side == Side::Buy) {
+//       bids_.erase(price);
+//     } else { // Sell side
+//       asks_.erase(price);
+//     }
+//   }
+// }
 
 /* Function that returns the current best bid price and the quantity */
 std::optional<std::pair<Price, Quantity>> LimitOrderBook::get_best_bid() const {
   if (bids_.empty()) {
+    std::cout << "Bids currently empty" << std::endl;
     return std::nullopt; // when empty, use with optional library
   }
 
@@ -171,8 +268,10 @@ std::optional<std::pair<Price, Quantity>> LimitOrderBook::get_best_bid() const {
 
 /* Function that returns the current best bid price and the quantity */
 std::optional<std::pair<Price, Quantity>> LimitOrderBook::get_best_ask() const {
-  if (asks_.empty())
+  if (asks_.empty()) {
+    std::cout << "Bids currently empty" << std::endl;
     return std::nullopt;
+  }
 
   const auto &best_price_level = asks_.begin()->second;
 
@@ -182,4 +281,80 @@ std::optional<std::pair<Price, Quantity>> LimitOrderBook::get_best_ask() const {
   }
 
   return std::make_pair(asks_.begin()->first, total_quantity);
+}
+
+/* Function that prints the tradelog */
+void LimitOrderBook::print_trades() const {
+  std::cout << "\n --- Trade Log --- " << std::endl;
+
+  /* If no trades */
+  if (trades_.empty()) {
+    std::cout << "No Trades have occured yet" << std::endl;
+  }
+
+  /* Print out all trades */
+  for (const auto &trade : trades_) {
+    std::cout << "-Filled " << trade.quantity << " @ " << trade.price
+              << " Maker: " << trade.resting_order_id
+              << " Taker: " << trade.aggressing_order_id << ")" << std::endl;
+  }
+
+  std::cout << "-----------" << std::endl;
+}
+
+/* Function that prints the whole limit order book; includes bids and asks.
+ * Used for debugging as well as display
+ * */
+void LimitOrderBook::print_book(size_t depth) const {
+  std::cout << "\n"
+            << "========================================================="
+            << std::endl
+            << std::setw(12) << "BID" << std::setw(26) << "ASK" << std::endl
+            << "---------------------------------------------------------"
+            << std::endl
+            << "Orders | Quantity | Price    || Price    | Quantity | Orders"
+            << std::endl
+            << "---------------------------------------------------------"
+            << std::endl;
+
+  /* Iterator to the nodes of bid and ask */
+  auto bid_iter = bids_.begin();
+  auto ask_iter = asks_.begin();
+
+  /* Go through each price level depth times; 0 if end of price level  */
+  for (size_t i = 0; i < depth; ++i) {
+    /* Print BID side */
+    if (bid_iter != bids_.end()) {
+      const auto &[price, orders] = *bid_iter;
+      Quantity total_quantity = std::accumulate(
+          orders.begin(), orders.end(), 0u,
+          [](Quantity sum, const Order &o) { return sum + o.quantity; });
+
+      /* Formatting output. stdout relevant elements */
+      std::cout << std::setw(6) << orders.size() << " | " << std::setw(8)
+                << total_quantity << " | " << std::setw(8) << price;
+      ++bid_iter; // Move to next bid node
+    } else {
+      // If out of bids, print empty space
+      std::cout << std::setw(28) << "";
+    }
+
+    /* Print ASK SIDE */
+    if (ask_iter != asks_.end()) {
+      const auto &[price, orders] = *ask_iter;
+      Quantity total_quantity = std::accumulate(
+          orders.begin(), orders.end(), 0u,
+          [](Quantity sum, const Order &o) { return sum + o.quantity; });
+
+      /* Format and output relevant elements */
+      std::cout << std::setw(8) << price << " | " << std::setw(8)
+                << total_quantity << " | " << std::setw(6) << orders.size();
+      ++ask_iter;
+    } else {
+      std::cout << std::setw(28) << "";
+    }
+    std::cout << std::endl;
+  }
+  std::cout << "========================================================="
+            << std::endl;
 }

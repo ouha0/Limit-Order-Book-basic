@@ -8,7 +8,7 @@ ADD SELL 102 15
 ADD SELL 101 5
 
 # Scenario 2: Aggressive buy order
-ADD BUY 101 20
+ADD BUY 101 15
 
 # Scenario 3: Aggressive sell order
 ADD SELL 100 15

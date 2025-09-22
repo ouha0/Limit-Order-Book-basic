@@ -15,10 +15,6 @@
 
 using OrderList = std::list<Order>;
 
-/* Tag structs to avoid compiler ambiguity */
-struct BuySideTag {};
-struct SellSideTag {};
-
 class LimitOrderBook {
 public:
   void add_order(OrderId id, Price price, Quantity quantity, Side side);
@@ -42,6 +38,7 @@ public:
 private:
   using BidBook = std::map<Price, OrderList, std::greater<Price>>;
   using AskBook = std::map<Price, OrderList>;
+
   using BidBookIterator = BidBook::iterator;
   using AskBookIterator = AskBook::iterator;
 
@@ -79,4 +76,7 @@ private:
                                OrderList::iterator list_it);
   void remove_filled_ask_order(AskBookIterator book_it,
                                OrderList::iterator list_it);
+  // Function overloading; doesn't work at the moment
+  void remove_price_level(BidBook::iterator bid_it);
+  void remove_price_level(AskBook::iterator ask_it);
 };

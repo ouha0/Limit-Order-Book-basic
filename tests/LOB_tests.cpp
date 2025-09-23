@@ -10,8 +10,8 @@ protected:
 /* Test suite */
 /* Basic Operations */
 TEST_F(LOBTest, AddAndMatch) {
-  lob.add_order(1, 100, 10, Side::Buy);
-  lob.add_order(2, 100, 10, Side::Sell);
+  lob.add_order({1, 100, 10, Side::Buy});
+  lob.add_order({2, 100, 10, Side::Sell});
 
   ASSERT_EQ(lob.get_trades().size(), 1); // Exactly one trade should occur
   const auto &trade = lob.get_trades().front(); // get first trade
@@ -29,8 +29,8 @@ TEST_F(LOBTest, AddAndMatch) {
 
 /* Order is successfully cancelled */
 TEST_F(LOBTest, CancelBestBid) {
-  lob.add_order(1, 100, 10, Side::Buy); // Worse price
-  lob.add_order(2, 105, 10, Side::Buy); // Best price
+  lob.add_order({1, 100, 10, Side::Buy}); // Worse price
+  lob.add_order({2, 105, 10, Side::Buy}); // Best price
 
   // CHECK 1: The best bid should be order #2 at price 105.
   // We use .at() to look up a specific price level.
@@ -48,10 +48,10 @@ TEST_F(LOBTest, CancelBestBid) {
 
 /* Tests the limit order book time priority rule, given the same price */
 TEST_F(LOBTest, FifoPriority) {
-  lob.add_order(1, 100, 10, Side::Buy);
-  lob.add_order(2, 100, 5, Side::Buy);
+  lob.add_order({1, 100, 10, Side::Buy});
+  lob.add_order({2, 100, 5, Side::Buy});
 
-  lob.add_order(3, 100, 10, Side::Sell);
+  lob.add_order({3, 100, 10, Side::Sell});
 
   ASSERT_EQ(lob.get_trades().size(), 1);        // Only one trade has occured
   const auto &trade = lob.get_trades().front(); // Reference only

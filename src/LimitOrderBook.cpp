@@ -4,6 +4,7 @@
 #include <iostream>
 #include <numeric>
 #include <utility>
+#include <variant>
 
 /* Remember to comment out assert when testing speed */
 
@@ -76,39 +77,36 @@ void LimitOrderBook::cancel_order(OrderId id) {
   }
 
   /* Save Order info */
-  const auto &order_info = it->second;
-  Price price = order_info.order_iter->price;
+  auto &order_info = it->second;
+  // Get variant iterator
+  auto &book_iter_variant = order_info.book_iter;
 
-  // Retrieve iterators from ordermap, update lob (delete order and node if
-  // necessary) Lamda function (by reference) to retrieve ordermap and update
-  // lob; using the book_iter object
-  std::visit(
-      [&](auto book_iter) {
-        /* Get iterator of price_level_list; erase relevant node using
-         * order_info iterator*/
-        auto &price_level_list = book_iter->second;
-        price_level_list.erase(order_info.order_iter);
+  /* Use get_if to access type of variant */
+  if (BidBookIterator *bid_book_iter_ptr =
+          std::get_if<BidBookIterator>(&book_iter_variant)) {
+    BidBookIterator &book_iter = *bid_book_iter_ptr;
 
-        /* If price level list is empty, delete the whole node (Deleting it will
-         * require O(logn) rebalancing; should be worthwhile to delete */
-        if (price_level_list.empty()) {
-          // Get type definition of book_iter
-          using BookIteratorType = std::decay_t<decltype(book_iter)>;
+    // Save into variables for readability; delete order from price list
+    auto &price_level_list = book_iter->second;
+    price_level_list.erase(order_info.order_iter);
 
-          // This currently doesn't work. The else statement is never
-          // evaluated... Perhaps change all these constexpressions...
-          if constexpr (std::is_same_v<BookIteratorType, BidBookIterator>) {
-            std::cout << "Hi" << std::endl;
-            bids_.erase(book_iter);
-          } else {
-            std::cout << "Bye" << std::endl;
-            asks_.erase(book_iter);
-          }
-        }
-      },
-      order_info.book_iter); // book_iter is the object we want to visit
+    // If price order list is empty, remove the whole list
+    if (price_level_list.empty()) {
+      bids_.erase(book_iter);
+    }
+  } else if (AskBookIterator *ask_book_iter_ptr =
+                 std::get_if<AskBookIterator>(&book_iter_variant)) {
+    AskBookIterator &book_iter = *ask_book_iter_ptr;
 
-  /* Delete order Ordermap */
+    auto &price_level_list = book_iter->second;
+    price_level_list.erase(order_info.order_iter);
+
+    if (price_level_list.empty()) {
+      asks_.erase(book_iter);
+    }
+  }
+
+  /* Delete order from order hashmap */
   order_map_.erase(it);
 }
 

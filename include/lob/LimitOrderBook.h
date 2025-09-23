@@ -37,10 +37,10 @@ public:
 
 private:
   using BidBook = std::map<Price, OrderList, std::greater<Price>>;
-  using AskBook = std::map<Price, OrderList>;
+  using AskBook = std::map<Price, OrderList, std::less<Price>>;
 
-  using BidBookIterator = BidBook::iterator;
   using AskBookIterator = AskBook::iterator;
+  using BidBookIterator = BidBook::iterator;
 
   /* Due to the nature of cancel order data generation , we may receive invalid
    * cancel orders */
@@ -77,6 +77,6 @@ private:
   void remove_filled_ask_order(AskBookIterator book_it,
                                OrderList::iterator list_it);
   // Function overloading; doesn't work at the moment
-  void remove_price_level(BidBook::iterator bid_it);
-  void remove_price_level(AskBook::iterator ask_it);
+  // void remove_price_level(BidBook::iterator bid_it);
+  // void remove_price_level(AskBook::iterator ask_it);
 };

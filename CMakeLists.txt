@@ -7,7 +7,7 @@ project(LimitOrderBook)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-# set(CMAKE_BUILD_TYPE Debug)
+
 
 # --- Project Configuration ---
 # Define the name of the executable

@@ -55,36 +55,41 @@ int main(int argc, char *argv[]) {
 
   /* Adding commands to LOB */
   for (const auto &cmd : commands) {
-    // Add order
     if (cmd.type == CommandType::Add) {
-
-      std::cout << "Before Add: Next order id is " << order_id_counter
-                << std::endl;
-
+      std::cout << "Before order was added" << std::endl;
       lob.add_order(order_id_counter++, cmd.price, cmd.quantity, cmd.side);
+      std::cout << "Order added" << std::endl;
 
-      // Debugging
-      std::cout << "Afer Add: Next order id is " << order_id_counter
-                << std::endl;
-      lob.print_book(5);
+      //// For testing / debugging
+      // auto best_ask_optional = lob.get_best_ask();
+      // auto best_bid_optional = lob.get_best_bid();
+      // if (best_ask_optional) {
+      //   auto [p, q] = *best_ask_optional;
+      //   std::cout << "Best ask @ " << p << " with quantity " << q <<
+      //   std::endl;
+      // } else {
+      //   std::cout << "No best ask" << std::endl;
+      // }
 
-      // Cancel order
+      // if (best_bid_optional) {
+      //   auto [p, q] = *best_bid_optional;
+      //   std::cout << "Best bid @ " << p << " with quantity " << q <<
+      //   std::endl;
+      // } else {
+      //   std::cout << "No best bid" << std::endl;
+      // }
+
+      //// End testing and debugging
     } else if (cmd.type == CommandType::Cancel) {
-      std::cout << "Before cancel: Current order id is " << order_id_counter
-                << std::endl;
-      lob.print_book(5);
-
+      std::cout << "Before order was cancelled" << std::endl;
       lob.cancel_order(cmd.id);
-
-      // Debugging
-      std::cout << "After Cancel: Next order id is " << order_id_counter
-                << std::endl;
-      lob.print_book(5);
+      std::cout << "after order was cancelled" << std::endl;
     }
+    // testing
+    print_trades(lob);
   }
-  auto end = std::chrono::high_resolution_clock::now();
 
-  // Performance measurements
+  auto end = std::chrono::high_resolution_clock::now();
   auto duration_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
       end - start); // long long
   double duration_sec = duration_ms.count() / 1000.0;
@@ -93,9 +98,8 @@ int main(int argc, char *argv[]) {
   double trades_per_second;
   trades_per_second = total_trades / duration_sec;
 
-  /* Part 3: Check and output performance */
-  std::cout << "\n--- Current Limit Order Book After all trades (first 10) --- "
-            << std::endl;
+  /* Part 3: Check Performance */
+  std::cout << "\n--- Current Limit Order Book --- " << std::endl;
   lob.print_book(10);
 
   std::cout << "\n--- Performance Report ---" << std::endl;

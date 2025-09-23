@@ -32,6 +32,9 @@ public:
   const std::vector<Trade> &get_trades() const {
     return trades_;
   }; // Constant reference to get trade log, without changing anything (display)
+
+  void print_book(size_t depth) const;
+
   uint64_t get_missed_cancel_count() const { return missed_cancels_; }
 
 private:

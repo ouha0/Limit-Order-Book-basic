@@ -1,6 +1,8 @@
 #include "lob/LimitOrderBook.h"
 #include "lob/Order.h"
+#include <iomanip>
 #include <iostream>
+#include <numeric>
 #include <utility>
 
 /* Remember to comment out assert when testing speed */
@@ -49,7 +51,7 @@ void LimitOrderBook::cancel_order(OrderId id) {
   /* Delete from bid / ask tree */
   if (order_info.side == Side::Buy) {
     auto &price_level_list =
-        bids_.at(price); // Error if price_level_list value not found
+        bids_.at(price); // Bottleneck here to search for price level
     price_level_list.erase(
         order_info.iter); // Delete order on doubly linked list
     /* Delete price level list if empty */
@@ -153,9 +155,9 @@ void LimitOrderBook::remove_filled_order(OrderList &order_list,
   }
 }
 
-/* Function that returns the current best bid price and the quantity */
 std::optional<std::pair<Price, Quantity>> LimitOrderBook::get_best_bid() const {
   if (bids_.empty()) {
+    std::cout << "Bids currently empty" << std::endl;
     return std::nullopt; // when empty, use with optional library
   }
 
@@ -171,8 +173,10 @@ std::optional<std::pair<Price, Quantity>> LimitOrderBook::get_best_bid() const {
 
 /* Function that returns the current best bid price and the quantity */
 std::optional<std::pair<Price, Quantity>> LimitOrderBook::get_best_ask() const {
-  if (asks_.empty())
+  if (asks_.empty()) {
+    std::cout << "Bids currently empty" << std::endl;
     return std::nullopt;
+  }
 
   const auto &best_price_level = asks_.begin()->second;
 
@@ -182,4 +186,60 @@ std::optional<std::pair<Price, Quantity>> LimitOrderBook::get_best_ask() const {
   }
 
   return std::make_pair(asks_.begin()->first, total_quantity);
+}
+
+/* Function that prints the whole limit order book; includes bids and asks.
+ * */
+void LimitOrderBook::print_book(size_t depth) const {
+  std::cout << "\n"
+            << "========================================================="
+            << std::endl
+            << std::setw(12) << "BID" << std::setw(26) << "ASK" << std::endl
+            << "---------------------------------------------------------"
+            << std::endl
+            << "Orders | Quantity | Price    || Price    | Quantity | Orders"
+            << std::endl
+            << "---------------------------------------------------------"
+            << std::endl;
+
+  /* Iterator to the nodes of bid and ask */
+  auto bid_iter = bids_.begin();
+  auto ask_iter = asks_.begin();
+
+  /* Go through each price level depth times; 0 if end of price level  */
+  for (size_t i = 0; i < depth; ++i) {
+    /* Print BID side */
+    if (bid_iter != bids_.end()) {
+      const auto &[price, orders] = *bid_iter;
+      Quantity total_quantity = std::accumulate(
+          orders.begin(), orders.end(), 0u,
+          [](Quantity sum, const Order &o) { return sum + o.quantity; });
+
+      /* Formatting output. stdout relevant elements */
+      std::cout << std::setw(6) << orders.size() << " | " << std::setw(8)
+                << total_quantity << " | " << std::setw(8) << price;
+      ++bid_iter; // Move to next bid node
+    } else {
+      // If out of bids, print empty space
+      std::cout << std::setw(28) << "";
+    }
+
+    /* Print ASK SIDE */
+    if (ask_iter != asks_.end()) {
+      const auto &[price, orders] = *ask_iter;
+      Quantity total_quantity = std::accumulate(
+          orders.begin(), orders.end(), 0u,
+          [](Quantity sum, const Order &o) { return sum + o.quantity; });
+
+      /* Format and output relevant elements */
+      std::cout << std::setw(8) << price << " | " << std::setw(8)
+                << total_quantity << " | " << std::setw(6) << orders.size();
+      ++ask_iter;
+    } else {
+      std::cout << std::setw(28) << "";
+    }
+    std::cout << std::endl;
+  }
+  std::cout << "========================================================="
+            << std::endl;
 }

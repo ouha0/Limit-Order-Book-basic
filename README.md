@@ -1,6 +1,5 @@
 ## LOB_basic
-This project is a simple implementation of a limit order book (LOB) in C++. It is designed as an educational tool to demonstrate the core functionality of matching buy and sell orders based on
-price-time priority.
+This project is a simple implementation of a limit order book (LOB) in C++ based on price-time priority.
 
 ## Features
 - **Add Orders:** Accepts new buy and sell limit orders
